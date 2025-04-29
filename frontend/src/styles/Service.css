@@ -1,0 +1,228 @@
+.services .services__top-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 0 30px;
+  }
+  
+  .services .services__top-content a {
+    text-decoration: none;
+    color: #948268;
+  }
+  
+  .services .services-title {
+    font-size: 40px;
+    font-weight: normal;
+    margin: 0;
+  }
+  
+  .services .services-cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 21px;
+    padding-bottom: 80px;
+    filter: drop-shadow(1px 5px 10px #d3d0ce);
+  }
+  
+  .services .services-cards .card__item {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(33.333% - 14px);
+    box-sizing: border-box;
+  }
+  
+  .services .services-cards .card__item img {
+    width: 100%;
+    height: 257px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  .services .services-cards .card__item .card-text {
+    margin: 20px 0;
+    width: 100%;
+  }
+  
+  .services .services-cards .card__item .card-text p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .services .services-cards .card__item .card-title {
+    padding-bottom: 15px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .services .services-cards .card__item .card-btn {
+    background-color: #948268;
+    color: #fff;
+    padding: 15px 0;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid #948268;
+    transition: 1.2s;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  .services .services-cards .card__item .card-btn:hover {
+    background-color: #fff;
+    border: 1px solid #948268;
+    color: #948268;
+  }
+  
+  .card-text__price {
+    font-size: 18px;
+    padding-top: 10px;
+  }
+  
+  span {
+    font-weight: bold;
+    font-size: 20px;
+    color: #948268;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 20px;
+    color: #948268;
+  }
+  
+  .pagination {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .pagination button {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .pagination button.active {
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+
+
+  /* Адаптивность для планшетов */
+  @media (max-width: 1024px) {
+    .services .services-cards .card__item {
+      width: calc(50% - 10px);
+    }
+    
+    .services .services-cards .card__item img {
+      height: 200px;
+    }
+  }
+  
+  /* Адаптивность для маленьких планшетов и больших телефонов */
+  @media (max-width: 768px) {
+    .services .services__top-content {
+      padding: 40px 0 20px;
+    }
+    
+    .services .services-title {
+      font-size: 32px;
+    }
+    
+    .services .services-cards {
+      gap: 15px;
+    }
+  }
+  
+  /* Адаптивность для мобильных устройств */
+  @media (max-width: 480px) {
+    .services .services__top-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 30px 0 20px;
+    }
+    
+    .services .services-title {
+      font-size: 28px;
+    }
+    
+    .services .services-cards {
+      gap: 12px;
+      padding-bottom: 40px;
+    }
+    
+    .services .services-cards .card__item {
+      width: 100%;
+      padding: 12px;
+    }
+    
+    .services .services-cards .card__item img {
+      height: 180px;
+    }
+    
+    .services .services-cards .card__item .card-text {
+      margin: 15px 0;
+    }
+    
+    .services .services-cards .card__item .card-title {
+      font-size: 18px;
+      padding-bottom: 10px;
+    }
+    
+    .services .services-cards .card__item .card-text p {
+      font-size: 15px;
+    }
+    
+    .card-text__price {
+      font-size: 16px;
+    }
+    
+    span {
+      font-size: 18px;
+    }
+    
+    .services .services-cards .card__item .card-btn {
+      padding: 12px 0;
+      font-size: 15px;
+    }
+  }
+  
+  /* Адаптивность для очень маленьких устройств (320px) */
+  @media (max-width: 320px) {
+    .services .services-title {
+      font-size: 24px;
+    }
+    
+    .services .services-cards .card__item img {
+      height: 150px;
+    }
+    
+    .services .services-cards .card__item .card-title {
+      font-size: 16px;
+    }
+    
+    .services .services-cards .card__item .card-text p {
+      font-size: 14px;
+    }
+    
+    .card-text__price {
+      font-size: 15px;
+    }
+    
+    span {
+      font-size: 16px;
+    }
+    
+    .services .services-cards .card__item .card-btn {
+      padding: 10px 0;
+      font-size: 14px;
+    }
+  }

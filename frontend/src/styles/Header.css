@@ -1,0 +1,94 @@
+.header {
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; */
+  background-color: #fff;
+  /* z-index: 1000; */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 10px 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* position: relative; */
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Pacifico', cursive;
+  flex-shrink: 0;
+}
+
+.logo-image {
+  height: 60px;
+  width: auto;
+}
+
+.main-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.auth-nav {
+  flex-shrink: 0;
+}
+
+.header nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 15px;
+}
+
+.header nav a, .logout-button {
+  color: #303030;
+  text-decoration: none;
+  font-size: 16px;
+  white-space: nowrap;
+  padding: 0 10px;
+}
+
+.header nav a:hover, .logout-button:hover {
+  color: #ccc;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.logout-button:hover {
+  color: #ccc;
+}
+
+.logout-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.header-error {
+  color: #ff6b6b;
+  font-size: 14px;
+  padding: 5px 10px;
+  background: rgba(255, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-top: 5px;
+}
+@media (max-width: 768px) {
+  .header nav ul {
+    gap: 10px;
+  }
+  
+  .header nav a, .logout-button {
+    font-size: 14px;
+    padding: 5px 8px;
+  }
+}

@@ -1,0 +1,37 @@
+.booked-date {
+  background-color: #ffcccc !important; /* Светло-красный фон для занятых дат */
+  color: #333 !important; /* Чёрный текст */
+  pointer-events: none; /* Отключает кликабельность */
+}
+
+.bookings-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-width: 500px;
+  width: 100%;
+}
+
+.bookings-modal h3 {
+  margin-top: 0;
+}
+
+.bookings-modal ul {
+  list-style: none;
+  padding: 0;
+}
+
+.bookings-modal li {
+  margin-bottom: 10px;
+}
+
+.bookings-modal button {
+  margin-top: 10px;
+  padding: 5px 10px;
+}
