@@ -41,7 +41,7 @@ const RoomsPage = () => {
 
   const handleSearch = (e) => {
     setSearchTitle(e.target.value);
-    setCurrentPage(1); // Сброс на первую страницу при новом поиске
+    setCurrentPage(1);
   };
 
   const handleMinPriceChange = (e) => {
@@ -60,7 +60,6 @@ const RoomsPage = () => {
     <div className="rooms-page container">
       <h2 className="rooms-title">НАШИ НОМЕРА</h2>
   
-      {/* Поле для поиска по названию */}
       <input
         type="text"
         placeholder="Поиск по названию"
@@ -69,7 +68,6 @@ const RoomsPage = () => {
         className="search-input"
       />
   
-      {/* Поля для фильтрации по цене */}
       <div className="price-filter">
         <input
           type="number"
