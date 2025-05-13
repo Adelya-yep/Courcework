@@ -1,6 +1,7 @@
 //config
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
+import SupportPage from "../pages/SupportPage.jsx";
 import LoginPage from "../pages/LoginPage"; 
 import ServicesPage from "../pages/ServicesPage"; 
 import AdminPanelPage from "../pages/AdminPanelPage"; // Новое: импорт админ-панели
@@ -22,6 +23,10 @@ export const publicRoutes= [
         title:"Номера",
         path: "/rooms",
         page: RoomsPage
+    },{
+        title:"Поддержка",
+        path: "/support",
+        page: SupportPage
     }
 ];
 

@@ -26,7 +26,7 @@ const ProfilePage = () => {
       const data = await BookingsApi.fetchUserBookings(user.id);
       const processedData = data.map((booking) => ({
         ...booking,
-        status: booking.status ? booking.status.replace(/"/g, "") : "PENDING", // Если status null, устанавливаем "PENDING"
+        status: booking.status ? booking.status.replace(/"/g, "") : "PENDING",
       }));
       setBookings(processedData);
     } catch (error) {
@@ -72,6 +72,15 @@ const ProfilePage = () => {
       setUser(response.data);
     } catch (error) {
       console.error("Ошибка при загрузке фотографии:", error);
+    }
+  };
+
+  const handleCancelBooking = async (bookingId) => {
+    try {
+      await BookingsApi.deleteBooking(bookingId);
+      fetchBookings(); // Обновляем список броней после удаления
+    } catch (error) {
+      console.error("Ошибка при отмене бронирования:", error);
     }
   };
 
@@ -132,10 +141,6 @@ const ProfilePage = () => {
 
           <h3 className="bookings-title">ВАШИ БРОНИРОВАНИЯ</h3>
 
-          {/* <button onClick={fetchBookings} className="btn btn-refresh">
-            Обновить бронирования
-          </button> */}
-
           <div className="bookings-section">
             {bookings.map((booking) => (
                 <div key={booking.bookingId} className="booking">
@@ -162,6 +167,20 @@ const ProfilePage = () => {
                           : "Отклонено"}
                 </span>
                   </div>
+                  <div className="booking-services">
+                    <span className="services-label">Услуги:</span>
+                    <span className="services-value">
+                  {booking.services && booking.services.length > 0
+                      ? booking.services.map((service) => service.serviceName).join(", ")
+                      : "Нет дополнительных услуг"}
+                </span>
+                  </div>
+                  <button
+                      onClick={() => handleCancelBooking(booking.bookingId)}
+                      className="btn btn-cancel"
+                  >
+                    Отменить бронирование
+                  </button>
                 </div>
             ))}
           </div>

@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
@@ -70,15 +71,28 @@ public class BookingService {
             throw new RoomAlreadyBookedException("Комната уже забронирована на указанные даты");
         }
 
-        Services service = null;
-        if (bookingDto.getServiceId() != null) {
-            ServiceDto serviceDto = serviceService.findById(bookingDto.getServiceId());
-            service = modelMapper.map(serviceDto, Services.class);
+        List<Services> selectedServices = null;
+        if (bookingDto.getServiceIds() != null && !bookingDto.getServiceIds().isEmpty()) {
+            selectedServices = bookingDto.getServiceIds().stream()
+                    .map(serviceId -> {
+                        ServiceDto serviceDto = serviceService.findById(serviceId);
+                        return modelMapper.map(serviceDto, Services.class);
+                    })
+                    .collect(Collectors.toList());
         }
 
         booking.setUser(user);
         booking.setRoom(room);
-        booking.setService(service);
+        booking.setServices(selectedServices);
+
+        // Вычисление totalSum
+        BigDecimal roomPrice = BigDecimal.valueOf(room.getPrice());
+        BigDecimal servicesPrice = selectedServices != null
+                ? selectedServices.stream()
+                .map(service -> BigDecimal.valueOf(service.getServicePrice())) // Исправлено на getServicePrice()
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                : BigDecimal.ZERO;
+        booking.setTotalSum(roomPrice.add(servicesPrice));
 
         Booking savedBooking = bookingRepository.save(booking);
 
@@ -88,7 +102,7 @@ public class BookingService {
         ticket.setRoomName(room.getRoomTitle());
         ticket.setCheckInDate(booking.getCheckInDate());
         ticket.setCheckOutDate(booking.getCheckOutDate());
-        ticket.setPrice(BigDecimal.valueOf(room.getPrice()));
+        ticket.setPrice(booking.getTotalSum());
 
         bookingTicketRepository.save(ticket);
 
@@ -117,15 +131,19 @@ public class BookingService {
         Optional<Room> roomOptional = roomService.getRoomById(booking.getRoom().getRoomId());
         Room room = roomOptional.orElseThrow(() -> new ResourceNotFoundException("Комната не найдена"));
 
-        Services service = null;
-        if (booking.getService() != null) {
-            ServiceDto serviceDto = serviceService.findById(booking.getService().getServiceId());
-            service = modelMapper.map(serviceDto, Services.class);
+        List<Services> selectedServices = null;
+        if (booking.getServices() != null && !booking.getServices().isEmpty()) {
+            selectedServices = booking.getServices().stream()
+                    .map(service -> {
+                        ServiceDto serviceDto = serviceService.findById(service.getServiceId());
+                        return modelMapper.map(serviceDto, Services.class);
+                    })
+                    .collect(Collectors.toList());
         }
 
         booking.setUser(user);
         booking.setRoom(room);
-        booking.setService(service);
+        booking.setServices(selectedServices);
 
         return bookingRepository.save(booking);
     }

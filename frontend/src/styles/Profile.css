@@ -138,3 +138,28 @@
   font-weight: 500;
   color: #333;
 }
+
+.booking-services {
+  margin-top: 10px;
+}
+
+.services-label {
+  font-weight: bold;
+}
+
+.services-value {
+  margin-left: 5px;
+}
+
+.btn-cancel {
+  margin-top: 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background-color: #ff3333;
+}

@@ -53,7 +53,6 @@ const ServicesPage = () => {
                 <p>Описание услуги можно добавить в API</p>
                 <p className="card-text__price"><span>{service.servicePrice}</span> руб</p>
               </div>
-              <Link to="/order" className="card-btn">ЗАКАЗАТЬ</Link>
             </div>
           ))}
         </div>

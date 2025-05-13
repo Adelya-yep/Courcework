@@ -4,6 +4,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "bookings")
@@ -28,9 +29,13 @@ public class Booking {
     @Column(name = "check_out_date")
     private LocalDate checkOutDate;
 
-    @ManyToOne
-    @JoinColumn(name = "service_id")
-    private Services service;
+    @ManyToMany
+    @JoinTable(
+            name = "booking_services",
+            joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    private List<Services> services; // Массив услуг, может быть пустым
 
     @Column(name = "total_sum")
     private BigDecimal totalSum;

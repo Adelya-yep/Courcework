@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.flamexander.spring.security.jwt.dtos.RoomDto;
+import ru.flamexander.spring.security.jwt.dtos.RoomStatisticsDto;
 import ru.flamexander.spring.security.jwt.entities.Room;
 import ru.flamexander.spring.security.jwt.service.RoomService;
 
@@ -93,5 +94,11 @@ public class RoomController {
         }
         roomService.deleteRoom(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<List<RoomStatisticsDto>> getRoomStatistics() {
+        List<RoomStatisticsDto> statistics = roomService.getRoomStatistics();
+        return ResponseEntity.ok(statistics);
     }
 }

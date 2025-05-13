@@ -11,7 +11,7 @@ const BookingsApi = {
       }
       throw new Error('Ошибка при бронировании');
     }
-  },  
+  },
   fetchUserBookings: async (userId) => {
     try {
       const response = await apiClient.get(`/api/bookings/user/${userId}`);
@@ -24,6 +24,13 @@ const BookingsApi = {
     try {
       const response = await apiClient.get(`/api/bookings/room/${roomId}`);
       return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteBooking: async (bookingId) => {
+    try {
+      await apiClient.delete(`/api/bookings/delete/${bookingId}`);
     } catch (error) {
       throw error;
     }

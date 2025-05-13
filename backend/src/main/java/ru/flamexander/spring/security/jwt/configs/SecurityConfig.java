@@ -52,9 +52,13 @@ public class SecurityConfig {
                 .antMatchers("/api/services/**").permitAll()
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/rooms/update/**").hasRole("ADMIN")
-                .antMatchers("/api/users/list").hasRole("ADMIN") // Список пользователей только для админов
+                .antMatchers("/api/rooms/statistics").hasRole("ADMIN")
+                .antMatchers("/api/users/list").hasRole("ADMIN")
                 .antMatchers("/api/bookings/update-status/**").hasRole("ADMIN")
-                .antMatchers("/api/bookings").hasRole("ADMIN") // Исправлено: доступ к /api/bookings только для админов
+                .antMatchers("/api/bookings").hasRole("ADMIN")
+                .antMatchers("/api/feedback").hasRole("ADMIN") // Admin-only feedback list
+                .antMatchers("/api/feedback/update-status/**").hasRole("ADMIN") // Admin-only status update
+                .antMatchers("/api/feedback/send/**").authenticated() // Feedback submission for authenticated users
                 .antMatchers("/private/**").authenticated()
                 .antMatchers("/api/auth/me").authenticated()
                 .antMatchers("/api/bookings/room/**").permitAll()
@@ -63,6 +67,7 @@ public class SecurityConfig {
                 .antMatchers("/api/users/**").authenticated()
                 .antMatchers("/api/bookings/user/**").authenticated()
                 .antMatchers("/api/bookings/add").authenticated()
+                .antMatchers("/api/bookings/delete/**").authenticated()
                 .antMatchers("/api/rooms/admin").permitAll()
                 .antMatchers("/api/rooms/**").permitAll()
                 .antMatchers("/api/rooms/add").hasRole("ADMIN")

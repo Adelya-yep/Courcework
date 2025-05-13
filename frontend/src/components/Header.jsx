@@ -40,7 +40,7 @@ const Header = () => {
             <li><Link to="/rooms">Номера</Link></li>
             <li><Link to="/services">Услуги</Link></li>
             <li><Link to="/">О нас</Link></li>
-            <li><Link to="/">Контакты</Link></li>
+            <li><Link to="/support">Поддержка</Link></li>
           </ul>
         </nav>
         <nav className="auth-nav">

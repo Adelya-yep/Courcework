@@ -5,12 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.flamexander.spring.security.jwt.dtos.RoomDto;
+import ru.flamexander.spring.security.jwt.dtos.RoomStatisticsDto;
 import ru.flamexander.spring.security.jwt.entities.Room;
 import ru.flamexander.spring.security.jwt.repositories.RoomRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -92,5 +94,16 @@ public class RoomService {
 
     public Page<Room> getAvailableRooms(Pageable pageable) {
         return roomRepository.findByStatusNot("HIDDEN", pageable);
+    }
+
+    public List<RoomStatisticsDto> getRoomStatistics() {
+        List<Object[]> statistics = roomRepository.getRoomBookingStatistics();
+        return statistics.stream()
+                .map(stat -> new RoomStatisticsDto(
+                        (Long) stat[0],
+                        (String) stat[1],
+                        ((Number) stat[2]).longValue()
+                ))
+                .collect(Collectors.toList());
     }
 }

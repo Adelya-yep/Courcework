@@ -6,14 +6,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.flamexander.spring.security.jwt.entities.Role;
 import ru.flamexander.spring.security.jwt.entities.Room;
+import ru.flamexander.spring.security.jwt.entities.Services;
 import ru.flamexander.spring.security.jwt.repositories.RoleRepository;
 import ru.flamexander.spring.security.jwt.repositories.RoomRepository;
+import ru.flamexander.spring.security.jwt.repositories.ServiceRepository;
 
 @Configuration
 public class InitialDataConfig {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     @Bean
     public CommandLineRunner initializeData(RoleRepository roleRepository) {
@@ -82,6 +87,34 @@ public class InitialDataConfig {
                 roomRepository.save(new Room(null, "Семейный люкс", "Люкс",
                         "Двухэтажный номер с тремя спальнями, гостиной и террасой. Идеален для семейного отдыха. Корпус 7, этаж 7. Две ванные комнаты (одна с джакузи). Площадь: 80 м². Вид на озеро и горы.",
                         25000.0, "FREE", "/img/live_card-image8.png"));
+            }
+            if (serviceRepository.count() == 0) {
+                serviceRepository.save(new Services(null, "Спа-процедуры",
+                        2500.0, "/img/services/spa.jpg"));
+
+                serviceRepository.save(new Services(null, "Массаж",
+                        2000.0, "/img/services/massage.jpg"));
+
+                serviceRepository.save(new Services(null, "Тренажерный зал",
+                        500.0, "/img/services/gym.jpg"));
+
+                serviceRepository.save(new Services(null, "Бассейн",
+                        800.0, "/img/services/pool.jpg"));
+
+                serviceRepository.save(new Services(null, "Теннисный корт",
+                        1500.0, "/img/services/tennis.jpg"));
+
+                serviceRepository.save(new Services(null, "Экскурсии",
+                        1800.0, "/img/services/excursion.jpg"));
+
+                serviceRepository.save(new Services(null, "Грязевые ванны",
+                        700.0, "/img/services/glina.jpg"));
+
+                serviceRepository.save(new Services(null, "Ресторан",
+                        3000.0, "/img/services/restaurant.jpg"));
+
+                serviceRepository.save(new Services(null, "Трехразовое питание",
+                        1200.0, "/img/services/obed.jpg"));
             }
         };
     }

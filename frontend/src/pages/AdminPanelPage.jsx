@@ -29,6 +29,16 @@ const AdminPanelPage = () => {
                         Управление бронированиями
                     </button>
                 </Link>
+                <Link to="/admin/feedback" className="admin-link">
+                    <button className="admin-button">
+                        Управление заявками
+                    </button>
+                </Link>
+                <Link to="/admin/statistics" className="admin-link">
+                    <button className="admin-button">
+                        Статистика популярности комнат
+                    </button>
+                </Link>
             </div>
         </div>
     );

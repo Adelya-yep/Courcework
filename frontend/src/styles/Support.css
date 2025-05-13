@@ -1,0 +1,45 @@
+.support-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.feedback-form {
+    margin-top: 20px;
+}
+
+.feedback-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feedback-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.feedback-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.feedback-form button:hover {
+    background-color: #0056b3;
+}
+
+.feedback-form .error {
+    color: red;
+}
+
+.feedback-form .success {
+    color: green;
+}
