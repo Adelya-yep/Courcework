@@ -37,12 +37,10 @@ const App = () => {
                 <Route path="/rooms" element={<RoomsPage />} />
                 <Route path="/rooms/:id" element={<RoomDetailPage />} />
                 <Route path="/support" element={<SupportPage />} />
-
                 <Route path="/booking/:roomId" element={<ProtectedRoute><BookingPage /></ProtectedRoute>} />
                 <Route path="/services-selection" element={<ProtectedRoute><ServicesSelectionPage /></ProtectedRoute>} />
                 <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
                 <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-
                 <Route path="/admin" element={<ProtectedRoute requiredRole="ROLE_ADMIN"><AdminPanelPage /></ProtectedRoute>} />
                 <Route path="/admin/services" element={<ProtectedRoute requiredRole="ROLE_ADMIN"><ServicesManagementPage /></ProtectedRoute>} />
                 <Route path="/admin/rooms" element={<ProtectedRoute requiredRole="ROLE_ADMIN"><RoomsManagementPage /></ProtectedRoute>} />
@@ -50,12 +48,10 @@ const App = () => {
                 <Route path="/admin/bookings" element={<ProtectedRoute requiredRole="ROLE_ADMIN"><BookingManagementPage /></ProtectedRoute>} />
                 <Route path="/admin/feedback" element={<ProtectedRoute requiredRole="ROLE_ADMIN"><FeedbackManagementPage /></ProtectedRoute>} />
                 <Route path="/admin/statistics" element={<ProtectedRoute requiredRole="ROLE_ADMIN"><AdminStatistics /></ProtectedRoute>} />
-
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
             <Footer />
         </Router>
     );
 };
-
 export default App;
