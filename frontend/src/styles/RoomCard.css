@@ -1,38 +1,98 @@
-/* Кастомные стили для переопределения Bootstrap */
-:root {
-    --primary-color: #948268;
-    --primary-hover: #7a6b56;
+/* Карточка номера */
+.card__item {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+}
+
+.card__item:hover {
+  transform: translateY(-5px);
+}
+
+/* Изображение */
+.room-image {
+  width: 100%;
+  height: 257px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Текстовая часть */
+.card-text {
+  margin: 30px 0;
+  width: 100%;
+}
+
+.card-text p {
+  margin: 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  margin: 0;
+}
+
+.card-title h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+/* Цена */
+.card-text__price {
+  font-size: 18px;
+  padding-top: 10px;
+  color: #333;
+}
+
+.card-text__price span {
+  font-weight: bold;
+  font-size: 20px;
+  color: #948268;
+}
+
+/* Кнопка */
+.card-btn {
+  background-color: #948268;
+  color: #fff;
+  padding: 15px 0;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid #948268;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: block;
+  width: 100%;
+  font-weight: 500;
+}
+
+.card-btn:hover {
+  background-color: #fff;
+  border: 1px solid #948268;
+  color: #948268;
+}
+
+@media (max-width: 768px) {
+  .live-cards {
+    flex-direction: column;
+    gap: 30px;
   }
   
-  .btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+  .card__item {
+    width: 100%;
   }
   
-  .btn-primary:hover {
-    background-color: var(--primary-hover);
-    border-color: var(--primary-hover);
+  .room-image {
+    height: 200px;
   }
-  
-  .text-primary {
-    color: var(--primary-color) !important;
-  }
-  
-  .service-card__image-container {
-    transition: transform 0.3s ease;
-  }
-  
-  .service-card__image-container:hover img {
-    transform: scale(1.05);
-  }
-  
-  .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-    border-radius: 10px;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-  }
+}

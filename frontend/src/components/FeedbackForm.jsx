@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
 import FeedbackApi from '../config/FeedbackApi';
 import useUserStore from '../store/UserStore';
 import '../styles/Support.css';
@@ -37,22 +38,41 @@ const FeedbackForm = () => {
     }
 
     return (
-        <div className="feedback-form">
-            <h3>Оставьте ваше сообщение</h3>
-            <form onSubmit={handleSubmit}>
-        <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Введите ваше сообщение..."
-            rows="5"
-            required
-        />
-                {error && <p className="error">{error}</p>}
-                {success && <p className="success">{success}</p>}
-                <button type="submit">Отправить</button>
-            </form>
+        <div className="p-4 p-md-5 bg-white rounded-3 shadow">
+          <h2 className="text-center mb-3">ОБРАТНАЯ СВЯЗЬ</h2>
+          <p className="text-center text-muted mb-4">Остались вопросы или возникли сложности? Напишите нам!</p>
+          
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                rows={8}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Введите ваше сообщение..."
+                className="mb-3"
+                style={{
+                    minHeight: '200px'
+                  }}
+              />
+            </Form.Group>
+      
+            {error && <Alert variant="danger" className="mb-3">{error}</Alert>}
+            {success && <Alert variant="success" className="mb-3">{success}</Alert>}
+      
+            <Button 
+              type="submit" 
+              style={{
+                backgroundColor: '#948268',
+                borderColor: '#948268'
+              }}
+              className="w-100"
+            >
+              Отправить
+            </Button>
+          </Form>
         </div>
-    );
+      );
 };
 
 export default FeedbackForm;
