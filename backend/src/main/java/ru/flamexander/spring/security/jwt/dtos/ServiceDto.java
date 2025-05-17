@@ -1,17 +1,18 @@
 package ru.flamexander.spring.security.jwt.dtos;
 
-import lombok.*;
-
-import javax.persistence.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor // Пустой конструктор
-@AllArgsConstructor // Конструктор со всеми параметрамин
+@NoArgsConstructor
+@AllArgsConstructor
 public class ServiceDto {
     private Long serviceId;
     private String serviceName;
-    private Double servicePrice;// Можно использовать Enum для статусов
+    private Double servicePrice;
     private String imageUrl;
+    private boolean pricePerPerson; // Новое поле для настраиваемости
 }

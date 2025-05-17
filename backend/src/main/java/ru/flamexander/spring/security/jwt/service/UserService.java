@@ -124,12 +124,13 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
-    public User updateUserProfile(Long id, String firstName, String lastName) {
+    public User updateUserProfile(Long id, String firstName, String lastName, String phoneNumber) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User userToUpdate = optionalUser.get();
             userToUpdate.setFirstName(firstName);
             userToUpdate.setLastName(lastName);
+            userToUpdate.setPhoneNumber(phoneNumber);
             return userRepository.save(userToUpdate);
         }
         return null;
@@ -188,6 +189,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
     }
+
     public boolean validateResetToken(String token) {
         Optional<User> optionalUser = userRepository.findByResetToken(token);
         if (optionalUser.isPresent()) {

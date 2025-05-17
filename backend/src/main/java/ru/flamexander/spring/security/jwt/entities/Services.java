@@ -1,6 +1,9 @@
 package ru.flamexander.spring.security.jwt.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -25,7 +28,9 @@ public class Services {
     @Column(name = "image_url")
     private String imageUrl;
 
-    // Добавлен геттер для servicePrice
+    @Column(name = "price_per_person")
+    private boolean pricePerPerson; // Новое поле для настраиваемости
+
     public Double getServicePrice() {
         return servicePrice;
     }

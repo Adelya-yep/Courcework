@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import java.util.List;
 
 @Configuration
@@ -56,9 +57,10 @@ public class SecurityConfig {
                 .antMatchers("/api/users/list").hasRole("ADMIN")
                 .antMatchers("/api/bookings/update-status/**").hasRole("ADMIN")
                 .antMatchers("/api/bookings").hasRole("ADMIN")
-                .antMatchers("/api/feedback").hasRole("ADMIN") // Admin-only feedback list
-                .antMatchers("/api/feedback/update-status/**").hasRole("ADMIN") // Admin-only status update
-                .antMatchers("/api/feedback/send/**").authenticated() // Feedback submission for authenticated users
+                .antMatchers("/api/feedback").hasRole("ADMIN")
+                .antMatchers("/api/feedback/update-status/**").hasRole("ADMIN")
+                .antMatchers("/api/feedback/send/**").authenticated()
+                .antMatchers("/api/feedback/user/**").authenticated()
                 .antMatchers("/private/**").authenticated()
                 .antMatchers("/api/auth/me").authenticated()
                 .antMatchers("/api/bookings/room/**").permitAll()

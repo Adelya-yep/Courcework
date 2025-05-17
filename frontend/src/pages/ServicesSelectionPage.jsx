@@ -9,7 +9,7 @@ const ServicesSelectionPage = () => {
     const navigate = useNavigate();
     const { roomId, checkInDate, checkOutDate, userId } = location.state || {};
     const [services, setServices] = useState([]);
-    const [selectedServices, setSelectedServices] = useState([]);
+    const [selectedServices, setSelectedServices] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -28,22 +28,33 @@ const ServicesSelectionPage = () => {
         fetchServices();
     }, []);
 
-    const handleServiceToggle = (serviceId) => {
-        setSelectedServices((prev) =>
-            prev.includes(serviceId)
-                ? prev.filter((id) => id !== serviceId)
-                : [...prev, serviceId]
-        );
+    const handleServiceToggle = (serviceId, peopleCount) => {
+        setSelectedServices((prev) => {
+            const newSelected = { ...prev };
+            if (peopleCount > 0) {
+                newSelected[serviceId] = peopleCount;
+            } else {
+                delete newSelected[serviceId];
+            }
+            return newSelected;
+        });
     };
 
     const handleProceedToPayment = () => {
+        const serviceIds = Object.keys(selectedServices).map(Number);
+        const servicePeopleCounts = selectedServices;
+        if (serviceIds.length > 0 && Object.values(servicePeopleCounts).some(count => count <= 0)) {
+            setError('Количество человек для каждой услуги должно быть больше 0');
+            return;
+        }
         navigate('/payment', {
             state: {
                 roomId,
                 checkInDate,
                 checkOutDate,
                 userId,
-                selectedServices,
+                serviceIds,
+                servicePeopleCounts,
             },
         });
     };
@@ -56,12 +67,19 @@ const ServicesSelectionPage = () => {
             <h2>Выберите дополнительные услуги</h2>
             <div className="services-list">
                 {services.map((service) => (
-                    <ServiceCheckbox
-                        key={service.serviceId}
-                        service={service}
-                        isSelected={selectedServices.includes(service.serviceId)}
-                        onToggle={handleServiceToggle}
-                    />
+                    <div key={service.serviceId} className="service-item">
+                        <ServiceCheckbox
+                            service={service}
+                            isSelected={!!selectedServices[service.serviceId]}
+                            onToggle={() => {}}
+                        />
+                        <input
+                            type="number"
+                            min="0"
+                            value={selectedServices[service.serviceId] || 0}
+                            onChange={(e) => handleServiceToggle(service.serviceId, parseInt(e.target.value) || 0)}
+                        />
+                    </div>
                 ))}
             </div>
             <button onClick={handleProceedToPayment}>Перейти к оплате</button>

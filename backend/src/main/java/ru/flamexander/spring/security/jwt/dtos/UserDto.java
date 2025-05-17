@@ -14,7 +14,8 @@ public class UserDto {
     private String role;
     private String firstName;
     private String lastName;
-    private String photoPath; // Новое поле
+    private String phoneNumber;
+    private String photoPath;
 
     public UserDto(Long id, String username, String email) {
         this.id = id;
@@ -23,6 +24,7 @@ public class UserDto {
         this.role = null;
         this.firstName = null;
         this.lastName = null;
+        this.phoneNumber = null;
         this.photoPath = null;
     }
 
@@ -33,6 +35,7 @@ public class UserDto {
         this.role = role;
         this.firstName = null;
         this.lastName = null;
+        this.phoneNumber = null;
         this.photoPath = null;
     }
 }

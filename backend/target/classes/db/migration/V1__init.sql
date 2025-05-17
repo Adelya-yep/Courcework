@@ -23,3 +23,12 @@ INSERT INTO services (service_name, service_price, image_url) VALUES
                                                                   ('Прачечная', 800.00, '/img/services/laundry.jpg'),
                                                                   ('Аренда конференц-зала', 10000.00, '/img/services/conference_room.jpg'),
                                                                   ('Wi-Fi', 0.00, '/img/services/wifi.jpg');
+
+
+SELECT * FROM bookings
+WHERE room_id = 2
+  AND (check_in_date <= '2025-05-22' AND check_out_date >= '2025-05-19');
+
+DELETE FROM bookings
+WHERE room_id = 2
+  AND (check_in_date <= '2025-05-22' AND check_out_date >= '2025-05-19');

@@ -23,11 +23,25 @@ import SupportPage from './pages/SupportPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
     return (
         <Router>
             <Header />
+            <ToastContainer
+                position="top-right" // Вот здесь мы указываем позицию справа сверху
+                autoClose={5000} // Уведомление закроется через 5 секунд
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light" // или "dark", "colored"
+            />
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<RegisterPage />} />

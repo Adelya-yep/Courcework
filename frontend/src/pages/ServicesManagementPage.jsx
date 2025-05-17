@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ServicesApi from "../config/servicesApi";
 import Pagination from "../components/Pagination";
-import "../styles/Admin.css";
-import "../styles/Pagination.css";
+import { Container, Spinner } from "react-bootstrap";
 
 const ServicesManagementPage = () => {
-  const [services, setServices] = useState([]); // Начальное значение — пустой массив
+  const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({ serviceName: "", servicePrice: "", imageUrl: "" }); // Добавлено imageUrl
+  const [formData, setFormData] = useState({ serviceName: "", servicePrice: "", imageUrl: "" });
   const [editingService, setEditingService] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
@@ -53,10 +52,10 @@ const ServicesManagementPage = () => {
       const newService = await ServicesApi.createService({
         serviceName: formData.serviceName,
         servicePrice: parseFloat(formData.servicePrice),
-        imageUrl: formData.imageUrl, // Передаем imageUrl
+        imageUrl: formData.imageUrl,
       });
       setServices([...services, newService]);
-      setFormData({ serviceName: "", servicePrice: "", imageUrl: "" }); // Очищаем форму
+      setFormData({ serviceName: "", servicePrice: "", imageUrl: "" });
       setTotalItems(totalItems + 1);
     } catch (error) {
       console.error("Ошибка создания услуги:", error);
@@ -74,7 +73,7 @@ const ServicesManagementPage = () => {
       const updatedService = await ServicesApi.updateService(editingService.serviceId, {
         serviceName: editingService.serviceName,
         servicePrice: parseFloat(editingService.servicePrice),
-        imageUrl: editingService.imageUrl, // Передаем imageUrl
+        imageUrl: editingService.imageUrl,
       });
       setServices(services.map((s) => (s.serviceId === updatedService.serviceId ? updatedService : s)));
       setEditingService(null);
@@ -83,141 +82,179 @@ const ServicesManagementPage = () => {
     }
   };
 
-  if (loading) return <div>Загрузка...</div>;
+  if (loading) return (
+    <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <Spinner animation="border" variant="secondary" />
+    </Container>
+  );
 
   return (
-    <div className="services-management">
-      <h2 className="admin-section-title">Управление услугами</h2>
+    <Container className="py-4">
+      <h2 className="mb-4 fw-bold" style={{ color: '#948268' }}>Управление услугами</h2>
 
-      <div className="admin-form-container">
-        <h3 className="admin-subsection-title">Добавить услугу</h3>
-        <form onSubmit={handleSubmit} className="admin-form">
-          <input
-            type="text"
-            name="serviceName"
-            value={formData.serviceName}
-            onChange={handleInputChange}
-            placeholder="Название услуги"
-            className="admin-input"
-            required
-          />
-          <input
-            type="number"
-            name="servicePrice"
-            value={formData.servicePrice}
-            onChange={handleInputChange}
-            placeholder="Цена"
-            className="admin-input"
-            step="0.01"
-            required
-          />
-          <input
-            type="text"
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleInputChange}
-            placeholder="URL картинки"
-            className="admin-input"
-          />
-          <button type="submit" className="admin-button admin-button-primary">
-            Добавить услугу
-          </button>
-        </form>
+      <div className="card mb-4 shadow-sm">
+        <div className="card-body">
+          <h3 className="h5 mb-3">Добавить услугу</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="row g-3">
+              <div className="col-md-4">
+                <input
+                  type="text"
+                  name="serviceName"
+                  value={formData.serviceName}
+                  onChange={handleInputChange}
+                  placeholder="Название услуги"
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="col-md-3">
+                <input
+                  type="number"
+                  name="servicePrice"
+                  value={formData.servicePrice}
+                  onChange={handleInputChange}
+                  placeholder="Цена"
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="col-md-3">
+                <input
+                  type="text"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleInputChange}
+                  placeholder="URL картинки"
+                  className="form-control"
+                />
+              </div>
+              <div className="col-md-2">
+                <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: '#948268' }}>
+                  Добавить
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
 
       {editingService && (
-        <div className="admin-form-container admin-edit-form">
-          <h3 className="admin-subsection-title">Редактировать услугу</h3>
-          <form onSubmit={handleEditSubmit} className="admin-form">
+  <div className="card mb-4 shadow-sm">
+    <div className="card-body">
+      <h3 className="h5 mb-3">Редактировать услугу</h3>
+      <form onSubmit={handleEditSubmit}>
+        <div className="row g-3 mb-3">
+          <div className="col-md-4">
             <input
               type="text"
               name="serviceName"
               value={editingService.serviceName}
               onChange={handleEditInputChange}
-              placeholder="Название услуги"
-              className="admin-input"
+              className="form-control"
               required
             />
+          </div>
+          <div className="col-md-3">
             <input
               type="number"
               name="servicePrice"
               value={editingService.servicePrice}
               onChange={handleEditInputChange}
-              placeholder="Цена"
-              className="admin-input"
+              className="form-control"
               step="0.01"
               required
             />
+          </div>
+          <div className="col-md-3">
             <input
               type="text"
               name="imageUrl"
               value={editingService.imageUrl || ""}
               onChange={handleEditInputChange}
               placeholder="URL картинки"
-              className="admin-input"
+              className="form-control"
             />
-            <div className="admin-form-actions">
-              <button type="submit" className="admin-button admin-button-save">
-                Сохранить изменения
-              </button>
-              <button
-                type="button"
-                onClick={() => setEditingService(null)}
-                className="admin-button admin-button-cancel"
-              >
-                Отмена
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      )}
-
-      <div className="admin-table-container">
-        <h3 className="admin-subsection-title">Список услуг</h3>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Название</th>
-              <th>Цена</th>
-              <th>Картинка</th> {/* Новый столбец для URL */}
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody>
-            {services &&
-              services.map((service) => (
-                <tr key={service.serviceId}>
-                  <td>{service.serviceId}</td>
-                  <td>{service.serviceName}</td>
-                  <td>{service.servicePrice.toFixed(2)} ₽</td>
-                  <td>{service.imageUrl ? <a href={service.imageUrl} target="_blank">Ссылка</a> : "Нет"}</td>
-                  <td className="admin-actions">
-                    <button
-                      onClick={() => setEditingService(service)}
-                      className="admin-button admin-button-edit"
-                    >
-                      Редактировать
-                    </button>
-                    <button
-                      onClick={() => handleDelete(service.serviceId)}
-                      className="admin-button admin-button-delete"
-                    >
-                      Удалить
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-        <Pagination
-          totalItems={totalItems}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-      </div>
+        <div className="row">
+          <div className="col-12 d-flex gap-2">
+            <button type="submit" className="btn btn-success flex-grow-1">
+              Сохранить изменения
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditingService(null)}
+              className="btn btn-outline-secondary flex-grow-1"
+            >
+              Отмена
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
+)}
+
+      <div className="card shadow-sm">
+        <div className="card-body">
+          <h3 className="h5 mb-3">Список услуг</h3>
+          <div className="table-responsive">
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Название</th>
+                  <th>Цена</th>
+                  <th>Картинка</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody>
+                {services.map((service) => (
+                  <tr key={service.serviceId}>
+                    <td>{service.serviceId}</td>
+                    <td>{service.serviceName}</td>
+                    <td>{service.servicePrice.toFixed(2)} ₽</td>
+                    <td>
+                      {service.imageUrl ? (
+                        <a href={service.imageUrl} target="_blank" rel="noopener noreferrer">
+                          Просмотр
+                        </a>
+                      ) : (
+                        "Нет"
+                      )}
+                    </td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <button
+                          onClick={() => setEditingService(service)}
+                          className="btn btn-sm btn-outline-primary"
+                        >
+                          Редакт.
+                        </button>
+                        <button
+                          onClick={() => handleDelete(service.serviceId)}
+                          className="btn btn-sm btn-outline-danger"
+                        >
+                          Удалить
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Pagination
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
+    </Container>
   );
 };
 

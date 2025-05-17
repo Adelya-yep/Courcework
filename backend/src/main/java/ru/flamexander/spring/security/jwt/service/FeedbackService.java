@@ -41,6 +41,11 @@ public class FeedbackService {
         return feedbacks.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
+    public List<FeedbackDto> getFeedbackByUserId(Long userId) {
+        List<Feedback> feedbacks = feedbackRepository.findByUserId(userId);
+        return feedbacks.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
     public Feedback updateFeedbackStatus(Long id, String status) {
         Feedback feedback = feedbackRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Заявка не найдена"));
@@ -51,8 +56,9 @@ public class FeedbackService {
     private FeedbackDto convertToDto(Feedback feedback) {
         FeedbackDto dto = new FeedbackDto();
         dto.setId(feedback.getId());
-        dto.setUsername(feedback.getUser().getUsername()); // Добавляем username пользователя
+        dto.setUsername(feedback.getUser().getUsername());
         dto.setUserId(feedback.getUser().getId());
+        dto.setEmail(feedback.getUser().getEmail());
         dto.setMessage(feedback.getMessage());
         dto.setStatus(feedback.getStatus());
         dto.setCreatedAt(feedback.getCreatedAt().toString());

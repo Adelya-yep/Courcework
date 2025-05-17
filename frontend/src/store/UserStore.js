@@ -4,9 +4,8 @@ import apiClient from '../config/apiClient';
 export const useUserStore = create((set, get) => ({
   isAuth: false,
   isLoading: true,
-  user: null, // Данные пользователя, включая роль и photoPath
+  user: null,
 
-  // Проверка аутентификации при загрузке
   checkAuth: async () => {
     if (window.location.pathname === '/reset-password') {
       set({ isLoading: false });
@@ -15,8 +14,13 @@ export const useUserStore = create((set, get) => ({
     try {
       const response = await apiClient.get('/api/auth/me', { withCredentials: true });
       if (response.status === 200) {
-        set({ isAuth: true, user: response.data, isLoading: false });
-        await get().fetchPhotoPath(response.data.id); // Проверяем photoPath после авторизации
+        const userId = response.data.id;
+        const userResponse = await apiClient.get(`/api/users/${userId}`, { withCredentials: true });
+        if (userResponse.status === 200) {
+          set({ isAuth: true, user: userResponse.data, isLoading: false });
+        } else {
+          set({ isAuth: false, user: null, isLoading: false });
+        }
       } else if (response.status === 401) {
         set({ isAuth: false, user: null, isLoading: false });
       }
@@ -26,7 +30,6 @@ export const useUserStore = create((set, get) => ({
     }
   },
 
-  // Получение photoPath
   fetchPhotoPath: async (userId) => {
     try {
       const response = await apiClient.get(`/api/users/${userId}`, { withCredentials: true });
@@ -40,7 +43,6 @@ export const useUserStore = create((set, get) => ({
     }
   },
 
-  // Регистрация пользователя
   register: async (data) => {
     try {
       const response = await apiClient.post('/api/auth/reg', data, {
@@ -54,7 +56,6 @@ export const useUserStore = create((set, get) => ({
     }
   },
 
-  // Вход пользователя
   login: async (data) => {
     try {
       const response = await apiClient.post('/api/auth/login', data, {
@@ -62,7 +63,7 @@ export const useUserStore = create((set, get) => ({
       });
       if (response.status >= 200 && response.status < 300) {
         set({ isAuth: true, user: response.data.user });
-        await get().checkAuth(); // Проверяем аутентификацию и загружаем данные пользователя
+        await get().checkAuth();
       }
       return response;
     } catch (error) {
@@ -72,7 +73,6 @@ export const useUserStore = create((set, get) => ({
     }
   },
 
-  // Выход пользователя
   logout: async () => {
     try {
       await apiClient.post('/api/auth/logout', {}, { withCredentials: true });
@@ -83,7 +83,6 @@ export const useUserStore = create((set, get) => ({
     }
   },
 
-  // Обновление данных пользователя
   setUser: (userData) => set({ user: userData }),
 }));
 

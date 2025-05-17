@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import apiClient from '../config/apiClient';
-import '../styles/Admin.css';
+import { Container, Spinner, Table, Form, Modal } from 'react-bootstrap';
 
 const UserManagementPage = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [editingUser, setEditingUser] = useState(null);
     const [formData, setFormData] = useState({ firstName: '', lastName: '' });
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -25,6 +26,7 @@ const UserManagementPage = () => {
     const handleEdit = (user) => {
         setEditingUser(user);
         setFormData({ firstName: user.firstName, lastName: user.lastName });
+        setShowModal(true);
     };
 
     const handleInputChange = (e) => {
@@ -37,6 +39,7 @@ const UserManagementPage = () => {
         try {
             const updatedUser = await apiClient.put(`/api/users/update/${editingUser.id}`, formData);
             setUsers(users.map(u => (u.id === updatedUser.data.id ? updatedUser.data : u)));
+            setShowModal(false);
             setEditingUser(null);
         } catch (error) {
             console.error('Ошибка обновления пользователя:', error);
@@ -44,77 +47,113 @@ const UserManagementPage = () => {
     };
 
     const handleDelete = async (id) => {
-        try {
-            await apiClient.delete(`/api/users/delete/${id}`);
-            setUsers(users.filter(u => u.id !== id));
-        } catch (error) {
-            console.error('Ошибка удаления пользователя:', error);
+        if (window.confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+            try {
+                await apiClient.delete(`/api/users/delete/${id}`);
+                setUsers(users.filter(u => u.id !== id));
+            } catch (error) {
+                console.error('Ошибка удаления пользователя:', error);
+            }
         }
     };
 
-    if (loading) return <div>Загрузка...</div>;
+    if (loading) return (
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+            <Spinner animation="border" variant="secondary" />
+        </Container>
+    );
 
     return (
-        <div className="admin-container">
-            <h2 className="admin-title">Управление пользователями</h2>
-            <div className="admin-table-container">
-                <table className="admin-table">
-                    <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Номер телефона</th>
-                        <th>Почта</th>
-                        <th>Действия</th>
-                    </tr>
+        <Container className="py-4" style={{ maxWidth: '1320px' }}>
+            <h2 className="mb-4 text-center" style={{ color: '#948268' }}>Управление пользователями</h2>
+            
+            <div className="table-responsive">
+                <Table striped bordered hover className="shadow-sm">
+                    <thead className="table-light">
+                        <tr>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Телефон</th>
+                            <th>Email</th>
+                            <th>Действия</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.firstName}</td>
-                            <td>{user.lastName}</td>
-                            <td>{user.phoneNumber || 'Не указан'}</td>
-                            <td>{user.email}</td>
-                            <td>
-                                <button className="admin-button admin-button-edit" onClick={() => handleEdit(user)}>Редактировать</button>
-                                <button className="admin-button admin-button-delete" onClick={() => handleDelete(user.id)}>Удалить</button>
-                            </td>
-                        </tr>
-                    ))}
+                        {users.map(user => (
+                            <tr key={user.id}>
+                                <td>{user.firstName}</td>
+                                <td>{user.lastName}</td>
+                                <td>{user.phoneNumber || 'Не указан'}</td>
+                                <td>{user.email}</td>
+                                <td>
+                                    <div className="d-flex gap-2">
+                                        <button 
+                                            className="btn btn-sm btn-outline-primary"
+                                            onClick={() => handleEdit(user)}
+                                        >
+                                            Редактировать
+                                        </button>
+                                        <button 
+                                            className="btn btn-sm btn-outline-danger"
+                                            onClick={() => handleDelete(user.id)}
+                                        >
+                                            Удалить
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
-                </table>
+                </Table>
             </div>
 
-            {editingUser && (
-                <div className="admin-form-container">
-                    <h3 className="admin-subsection-title">Редактировать пользователя</h3>
-                    <form onSubmit={handleSave} className="admin-form">
-                        <input
-                            type="text"
-                            name="firstName"
-                            value={formData.firstName}
-                            onChange={handleInputChange}
-                            placeholder="Имя"
-                            className="admin-input"
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="lastName"
-                            value={formData.lastName}
-                            onChange={handleInputChange}
-                            placeholder="Фамилия"
-                            className="admin-input"
-                            required
-                        />
-                        <div className="admin-form-actions">
-                            <button type="submit" className="admin-button admin-button-save">Сохранить</button>
-                            <button type="button" className="admin-button admin-button-cancel" onClick={() => setEditingUser(null)}>Отмена</button>
+            {/* Модальное окно редактирования */}
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                <Modal.Header closeButton className="text-white" style={{ backgroundColor: '#948268' }}>
+                    <Modal.Title>Редактировать пользователя</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleSave}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Имя</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Фамилия</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <div className="d-flex justify-content-end gap-2">
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary"
+                                onClick={() => setShowModal(false)}
+                            >
+                                Отмена
+                            </button>
+                            <button 
+                                type="submit" 
+                                className="btn text-white"
+                                style={{ backgroundColor: '#948268' }}
+                            >
+                                Сохранить
+                            </button>
                         </div>
-                    </form>
-                </div>
-            )}
-        </div>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        </Container>
     );
 };
 

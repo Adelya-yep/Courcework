@@ -30,7 +30,6 @@ public class InitialDataConfig {
             }
 
             if (roomRepository.count() == 0) {
-//                roomRepository.deleteAll();
                 roomRepository.save(new Room(null, "Одноместный стандарт", "Стандарт",
                         "Уютный однокомнатный номер с односпальной кроватью, без балкона. Корпус 1, этаж 1. Ванная комната с душем. Площадь: 19 м². Вид во внутренний двор.",
                         3500.0, "FREE", "/img/live_card-image.png"));
@@ -68,32 +67,15 @@ public class InitialDataConfig {
                         25000.0, "FREE", "/img/live_card-image8.png"));
             }
             if (serviceRepository.count() == 0) {
-                serviceRepository.save(new Services(null, "Спа-процедуры",
-                        2500.0, "/img/services/spa.jpg"));
-
-                serviceRepository.save(new Services(null, "Массаж",
-                        2000.0, "/img/services/massage.jpg"));
-
-                serviceRepository.save(new Services(null, "Тренажерный зал",
-                        500.0, "/img/services/gym.jpg"));
-
-                serviceRepository.save(new Services(null, "Бассейн",
-                        800.0, "/img/services/pool.jpg"));
-
-                serviceRepository.save(new Services(null, "Теннисный корт",
-                        1500.0, "/img/services/tennis.jpg"));
-
-                serviceRepository.save(new Services(null, "Экскурсии",
-                        1800.0, "/img/services/excursion.jpg"));
-
-                serviceRepository.save(new Services(null, "Грязевые ванны",
-                        700.0, "/img/services/glina.jpg"));
-
-                serviceRepository.save(new Services(null, "Ресторан",
-                        3000.0, "/img/services/restaurant.jpg"));
-
-                serviceRepository.save(new Services(null, "Трехразовое питание",
-                        1200.0, "/img/services/obed.jpg"));
+                serviceRepository.save(new Services(null, "Спа-процедуры", 2500.0, "/img/services/spa.jpg", false));
+                serviceRepository.save(new Services(null, "Массаж", 2000.0, "/img/services/massage.jpg", true));
+                serviceRepository.save(new Services(null, "Тренажерный зал", 500.0, "/img/services/gym.jpg", false));
+                serviceRepository.save(new Services(null, "Бассейн", 800.0, "/img/services/pool.jpg", false));
+                serviceRepository.save(new Services(null, "Теннисный корт", 1500.0, "/img/services/tennis.jpg", false));
+                serviceRepository.save(new Services(null, "Экскурсии", 1800.0, "/img/services/excursion.jpg", true));
+                serviceRepository.save(new Services(null, "Грязевые ванны", 700.0, "/img/services/glina.jpg", false));
+                serviceRepository.save(new Services(null, "Ресторан", 3000.0, "/img/services/restaurant.jpg", true));
+                serviceRepository.save(new Services(null, "Трехразовое питание", 1200.0, "/img/services/obed.jpg", true));
             }
         };
     }

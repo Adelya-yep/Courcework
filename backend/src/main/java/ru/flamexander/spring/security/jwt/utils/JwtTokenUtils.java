@@ -14,15 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.Collections; // Добавлен импорт для Collections.emptyList() если решишь использовать альтернативный вариант
 
 @Component
 public class JwtTokenUtils {
 
-    // поле типа String предназначено для хранения секретного ключа
     @Value("${jwt.secret}")
     private String secret;
 
-    // поле типа Duration хранит срок жизни
     @Value("${jwt.lifetime}")
     private Duration jwtLifetime;
 
@@ -48,7 +47,11 @@ public class JwtTokenUtils {
         return getAllClaimsFromToken(token).getSubject();
     }
 
+    @SuppressWarnings("unchecked") // Подавляем предупреждение для этого метода
     public List<String> getRoles(String token) {
+        // Эта строка использует Claims.get(String claimName, Class<T> requiredType)
+        // Предупреждение возникает из-за того, что List.class не передает информацию о типе элементов List<String>
+        // В данном контексте это стандартная практика, и мы ожидаем List<String>.
         return getAllClaimsFromToken(token).get("roles", List.class);
     }
 

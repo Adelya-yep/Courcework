@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Map;
 
 @Entity
 @Data
@@ -31,4 +32,10 @@ public class BookingTicket {
 
     @Column(name = "price")
     private BigDecimal price;
+
+    @ElementCollection
+    @CollectionTable(name = "booking_ticket_service_people", joinColumns = @JoinColumn(name = "booking_ticket_id"))
+    @MapKeyColumn(name = "service_id")
+    @Column(name = "people_count")
+    private Map<Long, Integer> servicePeopleCounts; // Количество человек для каждой услуги
 }

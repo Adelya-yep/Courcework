@@ -1,10 +1,13 @@
 package ru.flamexander.spring.security.jwt.entities;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "bookings")
@@ -36,6 +39,12 @@ public class Booking {
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
     private List<Services> services; // Массив услуг, может быть пустым
+
+    @ElementCollection
+    @CollectionTable(name = "booking_service_people", joinColumns = @JoinColumn(name = "booking_id"))
+    @MapKeyColumn(name = "service_id")
+    @Column(name = "people_count")
+    private Map<Long, Integer> servicePeopleCounts; // Количество человек для каждой услуги
 
     @Column(name = "total_sum")
     private BigDecimal totalSum;

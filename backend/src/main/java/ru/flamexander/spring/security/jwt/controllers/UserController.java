@@ -38,7 +38,7 @@ public class UserController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDto userDetails) {
-        User updatedUser = userService.updateUserProfile(id, userDetails.getFirstName(), userDetails.getLastName());
+        User updatedUser = userService.updateUserProfile(id, userDetails.getFirstName(), userDetails.getLastName(), userDetails.getPhoneNumber());
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {
@@ -66,7 +66,7 @@ public class UserController {
         if (!currentUserId.equals(id)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
-        User updatedUser = userService.updateUserProfile(id, userDto.getFirstName(), userDto.getLastName());
+        User updatedUser = userService.updateUserProfile(id, userDto.getFirstName(), userDto.getLastName(), userDto.getPhoneNumber());
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {

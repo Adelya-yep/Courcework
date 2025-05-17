@@ -35,6 +35,12 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbacks);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<FeedbackDto>> getFeedbackByUserId(@PathVariable Long userId) {
+        List<FeedbackDto> feedbacks = feedbackService.getFeedbackByUserId(userId);
+        return ResponseEntity.ok(feedbacks);
+    }
+
     @PutMapping("/update-status/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Feedback> updateFeedbackStatus(@PathVariable Long id, @RequestBody String status) {

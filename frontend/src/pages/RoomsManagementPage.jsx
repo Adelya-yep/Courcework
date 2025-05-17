@@ -153,7 +153,7 @@ const RoomsManagementPage = () => {
   );
 
   return (
-    <div className="container container-fluid py-4" style={{ backgroundColor: lightColor }}>
+    <div className="container container-fluid py-4">
       <div className="row">
         <div className="col-12">
           <h2 className="mb-4 text-center" style={{ color: primaryColor }}>Управление комнатами</h2>

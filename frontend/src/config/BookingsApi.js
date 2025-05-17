@@ -3,9 +3,11 @@ import apiClient from './apiClient';
 const BookingsApi = {
   createBooking: async (bookingData) => {
     try {
+      console.log('Sending booking request:', bookingData);
       const response = await apiClient.post('/api/bookings/add', bookingData);
       return response.data;
     } catch (error) {
+      console.error('Booking error:', error.response?.status, error.response?.data);
       if (error.response && error.response.status === 409) {
         throw new Error('Комната уже забронирована на указанные даты');
       }
