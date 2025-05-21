@@ -13,11 +13,11 @@ export default class UserAPI {
   static async registerUser(data) {
     try {
       const response = await apiClient.post('/api/auth/reg', data, {
-        withCredentials: true // Добавляем для поддержки кук
+        withCredentials: true
       });
-      return response.data; // Теперь методы возвращают только данные из ответа, а не весь response
+      return response.data; 
     } catch (error) {
-      // Улучшенная обработка ошибок
+      
       throw new Error(
         error.response?.data?.message || 
         error.message || 
@@ -29,7 +29,7 @@ export default class UserAPI {
   static async login(data) {
     try {
       const response = await apiClient.post('/api/auth/login', data, {
-        withCredentials: true // Ключевое изменение для работы с куками
+        withCredentials: true 
       });
       return response.data;
     } catch (error) {

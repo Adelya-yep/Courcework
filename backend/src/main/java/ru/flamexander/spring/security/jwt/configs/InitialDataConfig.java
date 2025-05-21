@@ -23,6 +23,7 @@ public class InitialDataConfig {
     @Bean
     public CommandLineRunner initializeData(RoleRepository roleRepository) {
         return args -> {
+            serviceRepository.deleteAll();
             if (!roleRepository.findByName("ROLE_USER").isPresent()) {
                 Role userRole = new Role();
                 userRole.setName("ROLE_USER");
@@ -67,15 +68,15 @@ public class InitialDataConfig {
                         25000.0, "FREE", "/img/live_card-image8.png"));
             }
             if (serviceRepository.count() == 0) {
-                serviceRepository.save(new Services(null, "Спа-процедуры", 2500.0, "/img/services/spa.jpg", false));
-                serviceRepository.save(new Services(null, "Массаж", 2000.0, "/img/services/massage.jpg", true));
-                serviceRepository.save(new Services(null, "Тренажерный зал", 500.0, "/img/services/gym.jpg", false));
-                serviceRepository.save(new Services(null, "Бассейн", 800.0, "/img/services/pool.jpg", false));
-                serviceRepository.save(new Services(null, "Теннисный корт", 1500.0, "/img/services/tennis.jpg", false));
-                serviceRepository.save(new Services(null, "Экскурсии", 1800.0, "/img/services/excursion.jpg", true));
-                serviceRepository.save(new Services(null, "Грязевые ванны", 700.0, "/img/services/glina.jpg", false));
-                serviceRepository.save(new Services(null, "Ресторан", 3000.0, "/img/services/restaurant.jpg", true));
-                serviceRepository.save(new Services(null, "Трехразовое питание", 1200.0, "/img/services/obed.jpg", true));
+                serviceRepository.save(new Services(null, "Лесной релакс", 12500.0, "/img/services/spa.jpg", false));
+                serviceRepository.save(new Services(null, "Тихий уголок", 13000.0, "/img/services/massage.jpg", true));
+                serviceRepository.save(new Services(null, "Все включено", 28000.0, "/img/services/gym.jpg", false));
+                serviceRepository.save(new Services(null, "Энергия", 14500.0, "/img/services/pool.jpg", false));
+                serviceRepository.save(new Services(null, "Лесной иммунитет", 20000.0, "/img/services/tennis.jpg", false));
+                serviceRepository.save(new Services(null, "Лесной спа", 22000.0, "/img/services/excursion.jpg", true));
+                serviceRepository.save(new Services(null, "Лесные исследователи", 16500.0, "/img/services/glina.jpg", false));
+                serviceRepository.save(new Services(null, "Здоровый росток", 13000.0, "/img/services/restaurant.jpg", true));
+                serviceRepository.save(new Services(null, "Без границ(для людей с ОВЗ)", 15000.0, "/img/services/obed.jpg", true));
             }
         };
     }

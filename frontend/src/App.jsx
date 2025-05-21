@@ -31,8 +31,8 @@ const App = () => {
         <Router>
             <Header />
             <ToastContainer
-                position="top-right" // Вот здесь мы указываем позицию справа сверху
-                autoClose={5000} // Уведомление закроется через 5 секунд
+                position="top-right"
+                autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -40,7 +40,7 @@ const App = () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                theme="light" // или "dark", "colored"
+                theme="light"
             />
             <Routes>
                 <Route path="/" element={<HomePage />} />

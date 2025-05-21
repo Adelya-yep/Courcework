@@ -40,8 +40,6 @@ const PaymentPage = () => {
 
         let fetchedServicesDetails = [];
         if (selectedServiceIds && selectedServiceIds.length > 0) {
-          // Запрашиваем достаточно большое количество услуг, чтобы покрыть все возможные
-          // В идеале, бэкенд должен предоставлять эндпоинт для получения услуг по списку ID
           const servicesResponse = await apiClient.get('/api/services', { params: { page: 1, size: 100 } });
           const allAvailableServices = servicesResponse.data.services;
 

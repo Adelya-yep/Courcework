@@ -22,7 +22,6 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      {/* Hero секция */}
       <section className="hero">
         <div className="hero__text container">
           <h1>ПАНСИОНАТ ЛЕСНЫЕ ДАЛИ</h1>
@@ -30,7 +29,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Секция проживание */}
       <section className="live">
         <div className="container">
           <div className="live__top-content">
@@ -55,7 +53,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Секция акции */}
       <section className="sale container">
         <h2>АКЦИИ</h2>
         <Carousel>
@@ -94,7 +91,6 @@ const Home = () => {
         </Carousel>
       </section>
 
-      {/* Секция контакты */}
       <section className="contact container">
         <h2>КОНТАКТЫ</h2>
         <div className="contact__content">

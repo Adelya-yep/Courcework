@@ -1,15 +1,14 @@
-// components/Header.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
-import '../App.css';
 import useUserStore from '../store/UserStore';
 import logo from '/img/logo-dark.svg';
-
 
 const Header = () => {
   const navigate = useNavigate();
   const { isAuth, user, isLoading, checkAuth, logout } = useUserStore();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -22,8 +21,15 @@ const Header = () => {
       }
     } catch (error) {
       console.error('Ошибка при выходе:', error);
-      // alert('Не удалось выйти. Попробуйте ещё раз.');
     }
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   if (isLoading) {
@@ -32,36 +38,62 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="header-content container">
-        <div className="logo"><img src={logo} alt="Логотип" className="logo-image" /></div>
-        <nav className="main-nav">
-          <ul>
-            <li><Link to="/">Главная</Link></li>
-            <li><Link to="/rooms">Номера</Link></li>
-            <li><Link to="/services">Услуги</Link></li>
-            <li><Link to="/">О нас</Link></li>
-            <li><Link to="/support">Поддержка</Link></li>
-          </ul>
-        </nav>
-        <nav className="auth-nav">
-          <ul>
+      <div className="header-container">
+        <div className="header-content">
+          <div className="logo">
+            <Link to="/">
+              <img src={logo} alt="Логотип" className="logo-image" />
+            </Link>
+          </div>
+
+          {/* Бургер-кнопка */}
+          <button 
+            className={`burger-btn ${isMenuOpen ? 'open' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Меню"
+          >
+            <span className="burger-line"></span>
+            <span className="burger-line"></span>
+            <span className="burger-line"></span>
+          </button>
+
+          {/* Основная навигация */}
+          <nav className={`main-nav ${isMenuOpen ? 'open' : ''}`}>
+            <ul className="nav-list">
+              <li className="nav-item">
+                <Link to="/" className="nav-link" onClick={closeMenu}>Главная</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/rooms" className="nav-link" onClick={closeMenu}>Номера</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/services" className="nav-link" onClick={closeMenu}>Услуги</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/support" className="nav-link" onClick={closeMenu}>Поддержка</Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Навигация авторизации */}
+          <div className={`auth-section ${isMenuOpen ? 'open' : ''}`}>
             {!isAuth ? (
-              <>
-                <li><Link to="/register">Регистрация</Link></li>
-                <li><Link to="/login">Вход</Link></li>
-              </>
+              <div className="auth-buttons">
+                <Link to="/register" className="auth-btn register" onClick={closeMenu}>Регистрация</Link>
+                <Link to="/login" className="auth-btn login" onClick={closeMenu}>Вход</Link>
+              </div>
             ) : (
-              <>
-                <li><Link to="/profile">{user?.username || 'Профиль'}</Link></li>
-                <li>
-                  <button onClick={handleLogout} className="logout-button">
-                    Выйти
-                  </button>
-                </li>
-              </>
+              <div className="user-section">
+                <Link to="/profile" className="profile-link" onClick={closeMenu}>
+                  {user?.username || 'Профиль'}
+                </Link>
+                <button onClick={handleLogout}>
+                  Выйти
+                </button>
+              </div>
             )}
-          </ul>
-        </nav>
+          </div>
+        </div>
       </div>
     </header>
   );

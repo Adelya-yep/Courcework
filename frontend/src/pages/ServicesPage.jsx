@@ -37,16 +37,16 @@ const ServicesPage = () => {
     <section className="services">
       <div className="container">
         <div className="services__top-content">
-          <h2 className="services-title">УСЛУГИ</h2>
+          <h2 className="services-title">ПАКЕТЫ УСЛУГ</h2>
           <Link className="services__link" to="/">На главную</Link>
         </div>
         <div className="services__bottom-content services-cards">
           {services.map((service) => (
             <div className="card__item" key={service.serviceId}>
               <img
-                src={service.imageUrl || "/img/service_default.jpg"} // Используем imageUrl или дефолтную картинку
+                src={service.imageUrl || "/img/service_default.jpg"}
                 alt={service.serviceName}
-                onError={(e) => { e.target.src = "/img/service_default.jpg"; }} // Обработка ошибки загрузки
+                onError={(e) => { e.target.src = "/img/service_default.jpg"; }}
               />
               <div className="card-text">
                 <h3 className="card-title">{service.serviceName}</h3>
